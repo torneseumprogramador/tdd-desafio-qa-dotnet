@@ -4,7 +4,7 @@ namespace tdd_desafio_qa_dotnet.Servicos;
 
 public static class Validar
 {
-    public static bool ValidarCPF(string? cpf)
+    public static bool ValidarCPF(string cpf)
     {
         if (cpf == null) return false;
         cpf = Regex.Replace(cpf, "\\D+", ""); // Remove todos os caracteres que não são números

@@ -1,6 +1,6 @@
 using tdd_desafio_qa_dotnet.Servicos;
 
-namespace test;
+namespace test.Unidades.Servicos;
 
 [TestClass]
 public class ValidadorTest

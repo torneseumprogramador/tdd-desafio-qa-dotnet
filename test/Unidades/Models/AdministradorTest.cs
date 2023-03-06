@@ -1,6 +1,6 @@
 using tdd_desafio_qa_dotnet.Models;
 
-namespace test;
+namespace test.Unidades.Models;
 
 [TestClass]
 public class AdministradorTest
