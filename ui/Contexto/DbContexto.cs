@@ -15,10 +15,7 @@ public class DbContexto : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            string conexao = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if(string.IsNullOrEmpty(conexao))
-                conexao = "Server=localhost;Database=desafioqa;Uid=root;Pwd=root";
-
+            var conexao = Startup.StrConexao();
             optionsBuilder.UseMySql(conexao, ServerVersion.AutoDetect(conexao));
         }
     }

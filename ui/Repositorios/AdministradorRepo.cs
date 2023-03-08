@@ -1,10 +1,11 @@
 using tdd_desafio_qa_dotnet.Contexto;
 using tdd_desafio_qa_dotnet.Models;
+using tdd_desafio_qa_dotnet.Repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace tdd_desafio_qa_dotnet.Repositorios;
 
-public class AdministradorRepo
+public class AdministradorRepo : IAdministradorRepo
 {
     private DbContexto _dbContexto;
 
