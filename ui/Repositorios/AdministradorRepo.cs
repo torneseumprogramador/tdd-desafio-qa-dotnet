@@ -9,12 +9,14 @@ public class AdministradorRepo : IAdministradorRepo
 {
     private DbContexto _dbContexto;
 
+    public AdministradorRepo(){ }
+
     public AdministradorRepo(DbContexto dbContexto)
     {
         this._dbContexto = dbContexto;
     }
 
-    public void Salvar(Administrador adm)
+    public virtual void Salvar(Administrador adm)
     {
         if(adm.Id > 0)
             _dbContexto.Administradores.Update(adm);
@@ -24,7 +26,7 @@ public class AdministradorRepo : IAdministradorRepo
         _dbContexto.SaveChanges();
     }
 
-    public Administrador BuscaPorEmail(string email)
+    public virtual Administrador BuscaPorEmail(string email)
     {
         return _dbContexto.Administradores.Where(c => c.Email.ToLower() == email.ToLower().Trim()).FirstOrDefault();
     }
@@ -34,18 +36,18 @@ public class AdministradorRepo : IAdministradorRepo
         _dbContexto.Database.ExecuteSqlRaw("TRUNCATE TABLE Administradores");
     }
 
-    public void Excluir(Administrador adm)
+    public virtual void Excluir(Administrador adm)
     {
         _dbContexto.Administradores.Remove(adm);
         _dbContexto.SaveChanges();
     }
 
-    public List<Administrador> BuscarTodos()
+    public virtual List<Administrador> BuscarTodos()
     {
         return _dbContexto.Administradores.ToList();
     }
 
-    public Administrador BuscaPorId(int id)
+    public virtual Administrador BuscaPorId(int id)
     {
         return _dbContexto.Administradores.Where(c => c.Id == id).FirstOrDefault();
     }
