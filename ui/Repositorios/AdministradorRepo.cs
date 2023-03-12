@@ -18,11 +18,17 @@ public class AdministradorRepo : IAdministradorRepo
 
     public virtual void Salvar(Administrador adm)
     {
-        if(adm.Id > 0)
-            _dbContexto.Administradores.Update(adm);
-        else
+        if(adm.Id > 0){
+            var admDb = BuscaPorId(adm.Id);
+            admDb.Nome = adm.Nome;
+            admDb.Email = adm.Email;
+            admDb.Senha = adm.Senha;
+            
+            _dbContexto.Administradores.Update(admDb);
+        }
+        else{
             _dbContexto.Administradores.Add(adm);
-        
+        }
         _dbContexto.SaveChanges();
     }
 

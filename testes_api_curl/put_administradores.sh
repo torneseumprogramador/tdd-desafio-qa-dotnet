@@ -10,4 +10,4 @@ read email
 echo "Digite o senha"
 read senha
 
-curl -d "{\"id\":$id, \"nome\":\"$nome\", \"email\":\"$email\", \"senha\":\"$senha\"}" -H "Content-Type: application/json" -X PUT http://localhost:5135/api/administradores/$id
+curl -v -d "{\"id\":$id, \"nome\":\"$nome\", \"email\":\"$email\", \"senha\":\"$senha\"}" -H "Content-Type: application/json" -X PUT http://localhost:5135/api/administradores/$id

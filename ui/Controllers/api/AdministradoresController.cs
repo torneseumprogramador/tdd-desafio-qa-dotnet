@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using tdd_desafio_qa_dotnet.Models;
-using tdd_desafio_qa_dotnet.Contexto;
+using tdd_desafio_qa_dotnet.Repositorios.Interfaces;
 
 namespace tdd_desafio_qa_dotnet.Controllers
 {
@@ -11,18 +8,18 @@ namespace tdd_desafio_qa_dotnet.Controllers
     [Route("api/[controller]")]
     public class AdministradoresController : ControllerBase
     {
-        private readonly DbContexto _context;
+        private readonly IAdministradorRepo _administradorRepo;
 
-        public AdministradoresController(DbContexto context)
+        public AdministradoresController(IAdministradorRepo administradorRepo)
         {
-            _context = context;
+            _administradorRepo = administradorRepo;
         }
 
         // GET: api/Administradores
         [HttpGet]
         public IActionResult Index()
         {
-            var administradores = _context.Administradores.ToList();
+            var administradores = _administradorRepo.BuscarTodos();
             return Ok(administradores);
         }
 
@@ -30,7 +27,7 @@ namespace tdd_desafio_qa_dotnet.Controllers
         [HttpGet("{id}")]
         public IActionResult Show(int id)
         {
-            var administrador = _context.Administradores.Find(id);
+            var administrador = _administradorRepo.BuscaPorId(id);
 
             if (administrador == null)
             {
@@ -49,23 +46,14 @@ namespace tdd_desafio_qa_dotnet.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(administrador).State = EntityState.Modified;
+            var admExistente = _administradorRepo.BuscaPorId(id);
 
-            try
+            if (admExistente == null)
             {
-                _context.SaveChanges();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdministradorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+            _administradorRepo.Salvar(administrador);
 
             return Ok(administrador);
         }
@@ -74,8 +62,7 @@ namespace tdd_desafio_qa_dotnet.Controllers
         [HttpPost]
         public IActionResult Create(Administrador administrador)
         {
-            _context.Administradores.Add(administrador);
-            _context.SaveChanges();
+            _administradorRepo.Salvar(administrador);
 
             return CreatedAtAction(nameof(Show), new { id = administrador.Id }, administrador);
         }
@@ -84,21 +71,16 @@ namespace tdd_desafio_qa_dotnet.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var administrador = _context.Administradores.Find(id);
+            var administrador = _administradorRepo.BuscaPorId(id);
+
             if (administrador == null)
             {
                 return NotFound();
             }
 
-            _context.Administradores.Remove(administrador);
-            _context.SaveChanges();
+            _administradorRepo.Excluir(administrador);
 
             return NoContent();
-        }
-
-        private bool AdministradorExists(int id)
-        {
-            return _context.Administradores.Any(e => e.Id == id);
         }
     }
 }
