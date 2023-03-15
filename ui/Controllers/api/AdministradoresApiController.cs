@@ -2,15 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using tdd_desafio_qa_dotnet.Models;
 using tdd_desafio_qa_dotnet.Repositorios.Interfaces;
 
-namespace tdd_desafio_qa_dotnet.Controllers
+namespace tdd_desafio_qa_dotnet.Controllers.Api
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class AdministradoresController : ControllerBase
+    [Route("api/administradores")]
+    public class AdministradoresApiController : ControllerBase
     {
         private readonly IAdministradorRepo _administradorRepo;
 
-        public AdministradoresController(IAdministradorRepo administradorRepo)
+        public AdministradoresApiController(IAdministradorRepo administradorRepo)
         {
             _administradorRepo = administradorRepo;
         }
