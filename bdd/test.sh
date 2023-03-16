@@ -4,3 +4,4 @@ export HOST_CHROMEDRIVER="http://localhost:5135"
 # echo $HOST_CHROMEDRIVER
 
 dotnet test
+# dotnet test --filter "Atualizar"

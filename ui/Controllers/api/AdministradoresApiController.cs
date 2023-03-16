@@ -23,6 +23,13 @@ namespace tdd_desafio_qa_dotnet.Controllers.Api
             return Ok(administradores);
         }
 
+        [HttpGet("{id}/truncate")]
+        public IActionResult Truncate(int id)
+        {
+            _administradorRepo.Truncate();
+            return NoContent();
+        }
+
         // GET: api/Administradores/5
         [HttpGet("{id}")]
         public IActionResult Show(int id)
@@ -82,5 +89,7 @@ namespace tdd_desafio_qa_dotnet.Controllers.Api
 
             return NoContent();
         }
+
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using BDDValidator.Helpers;
 using HtmlAgilityPack;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -17,6 +18,8 @@ public sealed class ValidateCPFStepDefinitions
 
     public ValidateCPFStepDefinitions(ScenarioContext scenarioContext)
     {
+        Config.Limpar();
+
         _scenarioContext = scenarioContext;
         // var chromeDriverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
         // _chromeDriver = new ChromeDriver(chromeDriverPath);
@@ -68,6 +71,7 @@ public sealed class ValidateCPFStepDefinitions
     public void DadoQueExistemOsAdministradoresCadastrados()
     {
         _chromeDriver.Navigate().GoToUrl(_host + "/Administradores");
+        cadastroBasico("John", "jon@teste.com", "133", "133");
     }
 
     [Then(@"devo ver a lista com pelo menos (.*) administrador")]
@@ -96,7 +100,7 @@ public sealed class ValidateCPFStepDefinitions
     [When(@"eu atualizo o administrador com nome ""(.*)"" e email ""(.*)"" para o nome ""(.*)"", email ""(.*)"" e senha ""(.*)""")]
     public void QuandoEuAtualizoOAdministradorComNomeEEmailParaONomeEmailESenha(string nomeBusca, string emailBusca, string nome, string email, string senha)
     {
-        localizaNomeEmail(nome, email, "Edit");
+        localizaNomeEmail(nomeBusca, emailBusca, "Edit");
     }
 
     [Then(@"o administrador com nome ""(.*)"" e email ""(.*)"" é atualizado com sucesso")]
@@ -182,10 +186,14 @@ public sealed class ValidateCPFStepDefinitions
         var table = doc.DocumentNode.SelectSingleNode("//table[@class='table']");
 
         // Loop through the table rows and check the name and email values
-        foreach (var row in table.SelectNodes("tbody/tr"))
+        var itens = table.SelectNodes("tbody/tr");
+        if(itens is null) return;
+
+        foreach (var row in itens)
         {
             var nomeHtml = row.SelectSingleNode("td[1]").InnerText.Trim();
             var emailHtml = row.SelectSingleNode("td[2]").InnerText.Trim();
+
             if (nomeHtml == nomeBusca && emailHtml == emailBusca)
             {
                 var editLink = row.SelectSingleNode("td[4]/a[contains(text(), '" + textoBotao + "')]");
@@ -209,7 +217,10 @@ public sealed class ValidateCPFStepDefinitions
 
         // Loop through the table rows and check the email value
         var emailExists = false;
-        foreach (var row in table.SelectNodes("tbody/tr"))
+        var itens = table.SelectNodes("tbody/tr");
+        if(itens is null) return false;
+
+        foreach (var row in itens)
         {
             var nomeEncontrado = row.SelectSingleNode("td[1]").InnerText.Trim();
             var emailEncontrado = row.SelectSingleNode("td[2]").InnerText.Trim();
