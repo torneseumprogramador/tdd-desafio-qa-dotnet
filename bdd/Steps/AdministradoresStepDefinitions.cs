@@ -133,6 +133,40 @@ public sealed class ValidateCPFStepDefinitions
         _chromeDriver.Close();
     }
 
+     [When(@"eu crio os seguintes novos administradores:")]
+    public void QuandoEuCrioOsSeguintesNovosAdministradores(Table table)
+    {
+        foreach (TableRow row in table.Rows)
+        {
+            string nome = row["Nome"];
+            string email = row["Email"];
+            string senha = row["Senha"];
+
+            cadastroBasico(nome, email, senha, senha);
+        }
+    }
+
+    [Then(@"os administradores são adicionados com sucesso")]
+    public void EntaoOsAdministradoresSaoAdicionadosComSucesso()
+    {
+        _chromeDriver.Navigate().GoToUrl(_host + "/Administradores");
+
+        var html = _chromeDriver.PageSource;
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+
+        // Find the table element by class
+        var table = doc.DocumentNode.SelectSingleNode("//table[@class='table']");
+
+        int quantidade = table.SelectNodes("tbody/tr").Count;
+
+        Assert.True(quantidade >= 5);
+
+       _chromeDriver.Close();
+    }
+
+    #region Privados
+
     private void cadastroBasico(string nome, string email, string senha, string csenha)
     {
         _chromeDriver.Navigate().GoToUrl(_host + "/Administradores/Create");
@@ -233,4 +267,6 @@ public sealed class ValidateCPFStepDefinitions
 
         return emailExists;
     }
+
+    #endregion
 }

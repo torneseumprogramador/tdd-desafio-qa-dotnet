@@ -106,13 +106,13 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Listar administradores cadastrados")]
-        public void ListarAdministradoresCadastrados()
+        [NUnit.Framework.DescriptionAttribute("Criar novos administradores")]
+        public void CriarNovosAdministradores()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Listar administradores cadastrados", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 10
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Criar novos administradores", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -122,13 +122,67 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 11
+#line 12
     testRunner.Given("que estou logado como administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 12
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Nome",
+                            "Email",
+                            "Senha"});
+                table1.AddRow(new string[] {
+                            "John Doe",
+                            "john.doe@example.com",
+                            "123456"});
+                table1.AddRow(new string[] {
+                            "Jane Smith",
+                            "jane.smith@example.com",
+                            "654321"});
+                table1.AddRow(new string[] {
+                            "Bob Johnson",
+                            "bob.johnson@example.com",
+                            "qwerty"});
+                table1.AddRow(new string[] {
+                            "Mary Jane",
+                            "mary.jane@example.com",
+                            "abc123"});
+                table1.AddRow(new string[] {
+                            "Jack Black",
+                            "jack.black@example.com",
+                            "777777"});
+#line 13
+    testRunner.When("eu crio os seguintes novos administradores:", ((string)(null)), table1, "Quando ");
+#line hidden
+#line 20
+    testRunner.Then("os administradores são adicionados com sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Listar administradores cadastrados")]
+        public void ListarAdministradoresCadastrados()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Listar administradores cadastrados", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 22
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 23
+    testRunner.Given("que estou logado como administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+#line hidden
+#line 24
     testRunner.And("que existem os administradores cadastrados:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
-#line 13
+#line 25
     testRunner.Then("devo ver a lista com pelo menos 1 administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
@@ -142,7 +196,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Atualizar um administrador existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 15
+#line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -152,18 +206,18 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 16
+#line 28
     testRunner.Given("que estou logado como administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 17
+#line 29
     testRunner.And("que o administrador com nome \"Jane Smith\" e email \"jane.smith@example.com\" já exi" +
                         "ste", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
-#line 18
+#line 30
     testRunner.When("eu atualizo o administrador com nome \"Jane Smith\" e email \"jane.smith@example.com" +
                         "\" para o nome \"Jane Doe\", email \"jane.doe@example.com\" e senha \"654321\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
-#line 19
+#line 31
     testRunner.Then("o administrador com nome \"Danilo Santos\" e email \"danilo.santos@example.com\" é at" +
                         "ualizado com sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
@@ -178,7 +232,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Excluir um administrador existente", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 21
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -188,18 +242,18 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 22
+#line 34
     testRunner.Given("que estou logado como administrador", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 23
+#line 35
     testRunner.And("que o administrador com nome \"Bob Johnson\" e email \"bob.johnson@example.com\" já e" +
                         "xiste", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
-#line 24
+#line 36
     testRunner.When("eu excluo o administrador com nome \"Bob Johnson\" e email \"bob.johnson@example.com" +
                         "\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
-#line 25
+#line 37
     testRunner.Then("o administrador com nome \"Bob Johnson\" e email \"bob.johnson@example.com\" é removi" +
                         "do com sucesso", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
