@@ -1,0 +1,20 @@
+{
+  "name": "bdd-cypress",
+  "version": "1.0.0",
+  "description": "Um projeto para fazer testes de comportamento",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "keywords": [
+    "bdd"
+  ],
+  "author": "Danilo Aparecido",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.8.1"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.1"
+  }
+}

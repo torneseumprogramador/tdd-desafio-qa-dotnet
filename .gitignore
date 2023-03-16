@@ -10,6 +10,12 @@ obj/
 /node_modules
 /wwwroot/node_modules
 
+downloads
+screenshots
+videos
+
+*.cy.js.mp4
+
 ### Linux ###
 *~
 

@@ -27,7 +27,7 @@ namespace tdd_desafio_qa_dotnet.Controllers.Api
         public IActionResult Truncate(int id)
         {
             _administradorRepo.Truncate();
-            return NoContent();
+            return Ok("Apagado com sucesso");
         }
 
         // GET: api/Administradores/5
