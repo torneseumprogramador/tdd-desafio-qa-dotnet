@@ -9,14 +9,13 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'dotnet test'
+        sh 'DATABASE_URL="Server=172.31.8.135;Database=desafioqa;Uid=root;Pwd=root" dotnet test'
       }
     }
 
     stage('TestE2E') {
       steps {
-        sh '''cd bdd
-dotnet test'''
+        sh '''cd bdd && dotnet test'''
       }
     }
 
