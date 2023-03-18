@@ -16,24 +16,24 @@ public sealed class ValidateCPFStepDefinitions
     private ChromeDriver _chromeDriver;
     private readonly ScenarioContext _scenarioContext;
 
-    public ValidateCPFStepDefinitions(ScenarioContext scenarioContext)
-    {
-        Config.Limpar();
+     public ValidateCPFStepDefinitions(ScenarioContext scenarioContext)
+        {
+            Config.Limpar();
 
-        _scenarioContext = scenarioContext;
-        // var chromeDriverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
-        //_chromeDriver = new ChromeDriver(chromeDriverPath);
+            _scenarioContext = scenarioContext;
+            _host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
 
-        int port = 33617; //Convert.ToInt32(Environment.GetEnvironmentVariable("PORT_CHROMEDRIVER"));
-        var options = new ChromeOptions();
-        options.AddArgument("start-maximized");
-        options.AddArgument($"--remote-debugging-port={port}");
-        var service = ChromeDriverService.CreateDefaultService();
-        service.Port = port;
-        _chromeDriver = new ChromeDriver(service, options);
+            var driverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
+            var chromeDriverService = ChromeDriverService.CreateDefaultService(driverPath);
 
-        _host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
-    }
+            int port = 33617; //Convert.ToInt32(Environment.GetEnvironmentVariable("PORT_CHROMEDRIVER"));
+
+            var options = new ChromeOptions();
+            options.AddArgument("start-maximized");
+            options.AddArgument($"--remote-debugging-port={port}");
+
+            _chromeDriver = new ChromeDriver(chromeDriverService, options);
+        }
 
     [Given(@"que estou logado como administrador")]
     public void DadoQueEstouLogadoComoAdministrador()
