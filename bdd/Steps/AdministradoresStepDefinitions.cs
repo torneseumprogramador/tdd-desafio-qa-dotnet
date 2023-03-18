@@ -38,7 +38,7 @@ public sealed class ValidateCPFStepDefinitions
     [Given(@"que estou logado como administrador")]
     public void DadoQueEstouLogadoComoAdministrador()
     {
-        _driver.Navigate().GoToUrl(_host + "/login");
+        _driver.Navigate().GoToUrl("http://localhost:5001/login");
 
         // Thread.Sleep(1000);
         _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
@@ -78,7 +78,7 @@ public sealed class ValidateCPFStepDefinitions
     [Given(@"que existem os administradores cadastrados:")]
     public void DadoQueExistemOsAdministradoresCadastrados()
     {
-        _driver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl("http://localhost:5001/Administradores");
         cadastroBasico("John", "jon@teste.com", "133", "133");
     }
 
@@ -157,7 +157,7 @@ public sealed class ValidateCPFStepDefinitions
     [Then(@"os administradores são adicionados com sucesso")]
     public void EntaoOsAdministradoresSaoAdicionadosComSucesso()
     {
-        _driver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl("http://localhost:5001/Administradores");
 
         var html = _driver.PageSource;
         var doc = new HtmlDocument();
@@ -177,7 +177,7 @@ public sealed class ValidateCPFStepDefinitions
 
     private void cadastroBasico(string nome, string email, string senha, string csenha)
     {
-        _driver.Navigate().GoToUrl(_host + "/Administradores/Create");
+        _driver.Navigate().GoToUrl("http://localhost:5001/Administradores/Create");
         
         // Find the name, email, password and confirm password fields by ID
         var nameField = _driver.FindElement(By.Id("Nome"));
@@ -248,7 +248,7 @@ public sealed class ValidateCPFStepDefinitions
 
     private bool validaNomeEmail(string nome, string email)
     {
-        _driver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl("http://localhost:5001/Administradores");
 
         var html = _driver.PageSource;
         var doc = new HtmlDocument();
