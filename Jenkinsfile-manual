@@ -1,0 +1,53 @@
+pipeline {
+  agent any
+  stages {
+     
+    stage('Clone') {
+        steps {
+            sh '''
+                rm -rf tdd-desafio-qa-dotnet
+                git clone https://github.com/torneseumprogramador/tdd-desafio-qa-dotnet
+            '''
+        }
+    }
+    
+    
+    stage('Build') {
+      steps {
+        sh '''
+            cd tdd-desafio-qa-dotnet
+            dotnet build
+        '''
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh '''
+            cd tdd-desafio-qa-dotnet
+            DATABASE_URL="Server=172.31.8.135;Database=desafioqa;Uid=root;Pwd=root" dotnet test
+        '''
+      }
+    }
+
+    stage('TestE3ECypress') {
+      steps {
+        sh '''
+            cd tdd-desafio-qa-dotnet/bdd-cypress
+            npm install
+            HOST="http://localhost:5135" npm test
+        '''
+      }
+    }
+
+    stage('TestE2E') {
+      steps {
+        sh '''
+            cd tdd-desafio-qa-dotnet/bdd 
+            HOST_CHROMEDRIVER="http://localhost:5135" PATH_CHROMEDRIVER="/var/lib/jenkins/chrome/chromedriver" dotnet test
+        '''
+      }
+    }
+
+  }
+}
