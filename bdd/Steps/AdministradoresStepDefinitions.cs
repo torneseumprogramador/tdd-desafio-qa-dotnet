@@ -21,9 +21,8 @@ public sealed class ValidateCPFStepDefinitions
         Config.Limpar();
 
         _scenarioContext = scenarioContext;
-        // var chromeDriverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
-        // _chromeDriver = new ChromeDriver(chromeDriverPath);
-        _chromeDriver = new ChromeDriver();
+        var chromeDriverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
+        _chromeDriver = new ChromeDriver(chromeDriverPath);
         _host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
     }
 
