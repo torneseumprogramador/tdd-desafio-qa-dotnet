@@ -24,11 +24,12 @@ public sealed class ValidateCPFStepDefinitions
         // var chromeDriverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
         //_chromeDriver = new ChromeDriver(chromeDriverPath);
 
+        int port = Convert.ToInt32(Environment.GetEnvironmentVariable("PORT_CHROMEDRIVER"));
         var options = new ChromeOptions();
         options.AddArgument("start-maximized");
-        options.AddArgument($"--remote-debugging-port=33617");
+        options.AddArgument($"--remote-debugging-port={port}");
         var service = ChromeDriverService.CreateDefaultService();
-        service.Port = 33617;
+        service.Port = port;
         _chromeDriver = new ChromeDriver(service, options);
 
         _host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
