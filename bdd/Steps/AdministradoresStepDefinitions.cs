@@ -23,7 +23,12 @@ public sealed class ValidateCPFStepDefinitions
         _scenarioContext = scenarioContext;
         // var chromeDriverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
         //_chromeDriver = new ChromeDriver(chromeDriverPath);
-        _chromeDriver = new ChromeDriver();
+
+        var options = new ChromeOptions();
+        options.AddArgument("start-maximized");
+        options.AddArgument($"--remote-debugging-port=33617");
+        var driver = new ChromeDriver(options);
+
         _host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
     }
 
