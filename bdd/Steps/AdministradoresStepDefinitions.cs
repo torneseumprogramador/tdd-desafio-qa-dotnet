@@ -11,16 +11,15 @@ namespace BDDValidator.Steps;
 [Binding]
 public sealed class ValidateCPFStepDefinitions
 {
-    private string _host = "http://localhost:5001";
+    private string _host = Environment.GetEnvironmentVariable("HOST");
     private FirefoxDriver _driver;
     private readonly ScenarioContext _scenarioContext;
 
     [BeforeScenario]
     public void BeforeScenario()
     {
-        // var driverPath = "/Users/danilo/Downloads/geckodriver";
-        var driverPath = "/usr/bin/firefox";
-
+        Config.Limpar(_host);
+        var driverPath = Environment.GetEnvironmentVariable("DRIVER_PATH");
         var firefoxOptions = new FirefoxOptions();
         firefoxOptions.AddArgument("--headless");
         _driver = new FirefoxDriver(driverPath, firefoxOptions);

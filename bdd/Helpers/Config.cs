@@ -6,9 +6,8 @@ namespace BDDValidator.Helpers;
 
 public class Config
 {
-    public static void Limpar()
+    public static void Limpar(string host)
     {
-        var host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
         HttpClient client = new HttpClient();
         string url = host + "/api/Administradores/1/truncate";
         Task.FromResult(client.GetAsync(url));
