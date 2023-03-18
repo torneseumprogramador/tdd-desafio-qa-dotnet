@@ -20,7 +20,7 @@ public sealed class ValidateCPFStepDefinitions
         Config.Limpar();
 
         _scenarioContext = scenarioContext;
-        _host = Environment.GetEnvironmentVariable("HOST");
+        _host = "http://localhost:5001"; //Environment.GetEnvironmentVariable("HOST");
         _driver = new FirefoxDriver();
     }
 
