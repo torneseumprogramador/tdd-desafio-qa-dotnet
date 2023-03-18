@@ -23,7 +23,14 @@ public sealed class ValidateCPFStepDefinitions
 
         FirefoxDriverService service = FirefoxDriverService.CreateDefaultService();
         service.FirefoxBinaryPath = "/usr/bin/firefox";
-        FirefoxDriver _driver = new FirefoxDriver(service);
+
+        var firefoxOptions = new FirefoxOptions();
+        firefoxOptions.AddArgument("--headless");
+        firefoxOptions.AcceptInsecureCertificates = true;
+
+        _driver = new FirefoxDriver(service, firefoxOptions);
+
+
 
         _host = "http://localhost:5001"; //Environment.GetEnvironmentVariable("HOST");
     }
