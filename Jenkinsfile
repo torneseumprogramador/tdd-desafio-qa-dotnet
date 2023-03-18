@@ -13,16 +13,16 @@ pipeline {
       }
     }
 
-    stage('TestE2E') {
-      steps {
-        sh '''cd bdd && HOST_CHROMEDRIVER="http://localhost:5135" PATH_CHROMEDRIVER="/var/lib/jenkins/chrome/chromedriver" dotnet test'''
-      }
-    }
-
     stage('TestE3ECypress') {
       steps {
         sh '''cd bdd-cypress
-npm test'''
+HOST="http://localhost:5135" npm test'''
+      }
+    }
+
+    stage('TestE2E') {
+      steps {
+        sh '''cd bdd && HOST_CHROMEDRIVER="http://localhost:5135" PATH_CHROMEDRIVER="/var/lib/jenkins/chrome/chromedriver" dotnet test'''
       }
     }
 
