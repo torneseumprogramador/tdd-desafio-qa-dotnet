@@ -16,6 +16,7 @@ pipeline {
     stage('TestE3ECypress') {
       steps {
         sh '''cd bdd-cypress
+npm install
 HOST="http://localhost:5135" npm test'''
       }
     }
