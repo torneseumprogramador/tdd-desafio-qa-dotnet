@@ -20,8 +20,12 @@ public sealed class ValidateCPFStepDefinitions
         Config.Limpar();
 
         _scenarioContext = scenarioContext;
+
+        FirefoxDriverService service = FirefoxDriverService.CreateDefaultService();
+        service.FirefoxBinaryPath = "/usr/bin/firefox";
+        FirefoxDriver _driver = new FirefoxDriver(service);
+
         _host = "http://localhost:5001"; //Environment.GetEnvironmentVariable("HOST");
-        _driver = new FirefoxDriver();
     }
 
     [Given(@"que estou logado como administrador")]
