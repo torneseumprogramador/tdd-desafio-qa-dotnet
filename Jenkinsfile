@@ -15,7 +15,7 @@ pipeline {
 
     stage('TestE2E') {
       steps {
-        sh '''cd bdd && HOST_CHROMEDRIVER="http://localhost:5135" dotnet test'''
+        sh '''cd bdd && HOST_CHROMEDRIVER="http://localhost:5135" PATH_CHROMEDRIVER="/root/chrome/chromedriver" dotnet test'''
       }
     }
 
