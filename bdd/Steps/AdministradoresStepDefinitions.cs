@@ -34,132 +34,129 @@ public sealed class ValidateCPFStepDefinitions
     [Given(@"que estou logado como administrador")]
     public void DadoQueEstouLogadoComoAdministrador()
     {
-        // _driver.Navigate().GoToUrl(_host + "/login");
+        _driver.Navigate().GoToUrl(_host + "/login");
 
-        // // Thread.Sleep(1000);
-        // _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+        // Thread.Sleep(1000);
+        _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
 
-        // var emailField = _driver.FindElement(By.Id("form2Example1"));
-        // var passwordField = _driver.FindElement(By.Id("form2Example2"));
+        var emailField = _driver.FindElement(By.Id("form2Example1"));
+        var passwordField = _driver.FindElement(By.Id("form2Example2"));
 
-        // // Enter email and password values
-        // emailField.SendKeys("test@example.com");
-        // // Thread.Sleep(1000);
-        // passwordField.SendKeys("password123");
-        // // Thread.Sleep(1000);
+        // Enter email and password values
+        emailField.SendKeys("test@example.com");
+        // Thread.Sleep(1000);
+        passwordField.SendKeys("password123");
+        // Thread.Sleep(1000);
 
-        // // Submit the form
-        // var submitButton = _driver.FindElement(By.CssSelector("button[type='submit']"));
-        // submitButton.Click();
-        // // Thread.Sleep(2000);
-
-
-        _driver.Navigate().GoToUrl("https://www.google.com/");
+        // Submit the form
+        var submitButton = _driver.FindElement(By.CssSelector("button[type='submit']"));
+        submitButton.Click();
+        // Thread.Sleep(2000);
     }
 
     [When(@"eu crio um novo administrador com nome ""(.*)"", email ""(.*)"", senha ""(.*)"" e confirmação de senha ""(.*)""")]
     public void QuandoEuCrioUmNovoAdministradorComNomeEmailSenhaEConfirmacaoDeSenha(string nome, string email, string senha, string csenha)
     {
-        // cadastroBasico(nome, email, senha, csenha);
+        cadastroBasico(nome, email, senha, csenha);
     }
 
     [Then(@"o administrador com nome ""(.*)"" e email ""(.*)"" é adicionado com sucesso")]
     public void EntaoOAdministradorComNomeEEmailEAdicionadoComSucesso(string nome, string email)
     {
-        // var emailExists = validaNomeEmail(nome, email);
+        var emailExists = validaNomeEmail(nome, email);
 
-        // // Assert
-        // Assert.True(emailExists);
+        // Assert
+        Assert.True(emailExists);
     }
 
     [Given(@"que existem os administradores cadastrados:")]
     public void DadoQueExistemOsAdministradoresCadastrados()
     {
-        // _driver.Navigate().GoToUrl(_host + "/Administradores");
-        // cadastroBasico("John", "jon@teste.com", "133", "133");
+        _driver.Navigate().GoToUrl(_host + "/Administradores");
+        cadastroBasico("John", "jon@teste.com", "133", "133");
     }
 
     [Then(@"devo ver a lista com pelo menos (.*) administrador")]
     public void EntaoDevoVerAListaComPeloMenosAdministrador(int p0)
     {
-        // var html = _driver.PageSource;
-        // var doc = new HtmlDocument();
-        // doc.LoadHtml(html);
+        var html = _driver.PageSource;
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
 
-        // // Find the table element by class
-        // var table = doc.DocumentNode.SelectSingleNode("//table[@class='table']");
+        // Find the table element by class
+        var table = doc.DocumentNode.SelectSingleNode("//table[@class='table']");
 
-        // int quantidade = table.SelectNodes("tbody/tr").Count;
+        int quantidade = table.SelectNodes("tbody/tr").Count;
 
-        // Assert.True(quantidade > 0);
+        Assert.True(quantidade > 0);
     }
 
     [Given(@"que o administrador com nome ""(.*)"" e email ""(.*)"" já existe")]
     public void DadoQueOAdministradorComNomeEEmailJaExiste(string nome, string email)
     {
-        // cadastroBasico(nome, email, "senha", "csenha");
+        cadastroBasico(nome, email, "senha", "csenha");
     }
 
     [When(@"eu atualizo o administrador com nome ""(.*)"" e email ""(.*)"" para o nome ""(.*)"", email ""(.*)"" e senha ""(.*)""")]
     public void QuandoEuAtualizoOAdministradorComNomeEEmailParaONomeEmailESenha(string nomeBusca, string emailBusca, string nome, string email, string senha)
     {
-        // localizaNomeEmail(nomeBusca, emailBusca, "Edit");
+        localizaNomeEmail(nomeBusca, emailBusca, "Edit");
     }
 
     [Then(@"o administrador com nome ""(.*)"" e email ""(.*)"" é atualizado com sucesso")]
     public void EntaoOAdministradorComNomeEEmailEAtualizadoComSucesso(string nome, string email)
     {
-        // atualizaNomeEmail(nome, email);
+        atualizaNomeEmail(nome, email);
 
-        // var emailExists = validaNomeEmail(nome, email);
-        // // Assert
-        // Assert.True(emailExists);
+        var emailExists = validaNomeEmail(nome, email);
+        // Assert
+        Assert.True(emailExists);
     }
      
     [When(@"eu excluo o administrador com nome ""(.*)"" e email ""(.*)""")]
     public void QuandoEuExcluoOAdministradorComNomeEEmail(string nome, string email)
     {
-        // localizaNomeEmail(nome, email, "Delete");
-        // var submitButton = _driver.FindElement(By.CssSelector("input[type='submit']"));
-        // submitButton.Click();
+        localizaNomeEmail(nome, email, "Delete");
+        var submitButton = _driver.FindElement(By.CssSelector("input[type='submit']"));
+        submitButton.Click();
     }
 
     [Then(@"o administrador com nome ""(.*)"" e email ""(.*)"" é removido com sucesso")]
     public void EntaoOAdministradorComNomeEEmailERemovidoComSucesso(string nome, string email)
     {
-        // var emailExists = validaNomeEmail(nome, email);
-        // // Assert
-        // Assert.False(emailExists);
+        var emailExists = validaNomeEmail(nome, email);
+        // Assert
+        Assert.False(emailExists);
     }
 
      [When(@"eu crio os seguintes novos administradores:")]
     public void QuandoEuCrioOsSeguintesNovosAdministradores(Table table)
     {
-        // foreach (TableRow row in table.Rows)
-        // {
-        //     string nome = row["Nome"];
-        //     string email = row["Email"];
-        //     string senha = row["Senha"];
+        foreach (TableRow row in table.Rows)
+        {
+            string nome = row["Nome"];
+            string email = row["Email"];
+            string senha = row["Senha"];
 
-        //     cadastroBasico(nome, email, senha, senha);
-        // }
+            cadastroBasico(nome, email, senha, senha);
+        }
     }
 
     [Then(@"os administradores são adicionados com sucesso")]
     public void EntaoOsAdministradoresSaoAdicionadosComSucesso()
     {
-        // _driver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl(_host + "/Administradores");
 
-        // var html = _driver.PageSource;
-        // var doc = new HtmlDocument();
-        // doc.LoadHtml(html);
+        var html = _driver.PageSource;
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
 
-        // // Find the table element by class
-        // var table = doc.DocumentNode.SelectSingleNode("//table[@class='table']");
+        // Find the table element by class
+        var table = doc.DocumentNode.SelectSingleNode("//table[@class='table']");
 
-        // int quantidade = table.SelectNodes("tbody/tr").Count;
+        int quantidade = table.SelectNodes("tbody/tr").Count;
 
-        // Assert.True(quantidade >= 5);
+        Assert.True(quantidade >= 5);
     }
 
     #region Privados
