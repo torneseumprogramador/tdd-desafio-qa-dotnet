@@ -45,10 +45,11 @@ pipeline {
     stage('TestE2E') {
       steps {
         sh '''
-            cd  tdd-desafio-qa-dotnet/ui 
-            DATABASE_URL="Server=172.31.8.135;Database=desafioqa;Uid=root;Pwd=root" dotnet run --urls=http://localhost:33617 &
+            cd  tdd-desafio-qa-dotnet/ui
+            chromedriver --port=33617 & 
+            DATABASE_URL="Server=172.31.8.135;Database=desafioqa;Uid=root;Pwd=root" PORT_CHROMEDRIVER=33617 dotnet run --urls=http://localhost:5001 &
             cd ../bdd 
-            HOST_CHROMEDRIVER="http://localhost:5135" dotnet test
+            HOST_CHROMEDRIVER="http://localhost:5001" dotnet test
         '''
       }
     }
