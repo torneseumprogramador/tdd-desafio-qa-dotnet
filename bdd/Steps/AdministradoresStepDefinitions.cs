@@ -4,47 +4,36 @@ using BDDValidator.Helpers;
 using HtmlAgilityPack;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using TechTalk.SpecFlow;
 
 namespace BDDValidator.Steps;
-
 [Binding]
 public sealed class ValidateCPFStepDefinitions
 {
     private string _host;
-    private ChromeDriver _chromeDriver;
+    private FirefoxDriver _driver;
     private readonly ScenarioContext _scenarioContext;
 
-     public ValidateCPFStepDefinitions(ScenarioContext scenarioContext)
-        {
-            Config.Limpar();
+    public ValidateCPFStepDefinitions(ScenarioContext scenarioContext)
+    {
+        Config.Limpar();
 
-            _scenarioContext = scenarioContext;
-            _host = Environment.GetEnvironmentVariable("HOST_CHROMEDRIVER");
-
-            var driverPath = Environment.GetEnvironmentVariable("PATH_CHROMEDRIVER");
-            var chromeDriverService = ChromeDriverService.CreateDefaultService(driverPath);
-
-            int port = 33617; //Convert.ToInt32(Environment.GetEnvironmentVariable("PORT_CHROMEDRIVER"));
-
-            var options = new ChromeOptions();
-            options.AddArgument("start-maximized");
-            options.AddArgument($"--remote-debugging-port={port}");
-
-            _chromeDriver = new ChromeDriver(chromeDriverService, options);
-        }
+        _scenarioContext = scenarioContext;
+        _host = Environment.GetEnvironmentVariable("HOST");
+        _driver = new FirefoxDriver();
+    }
 
     [Given(@"que estou logado como administrador")]
     public void DadoQueEstouLogadoComoAdministrador()
     {
-        _chromeDriver.Navigate().GoToUrl(_host + "/login");
+        _driver.Navigate().GoToUrl(_host + "/login");
 
         // Thread.Sleep(1000);
-        _chromeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+        _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
 
-        var emailField = _chromeDriver.FindElement(By.Id("form2Example1"));
-        var passwordField = _chromeDriver.FindElement(By.Id("form2Example2"));
+        var emailField = _driver.FindElement(By.Id("form2Example1"));
+        var passwordField = _driver.FindElement(By.Id("form2Example2"));
 
         // Enter email and password values
         emailField.SendKeys("test@example.com");
@@ -53,7 +42,7 @@ public sealed class ValidateCPFStepDefinitions
         // Thread.Sleep(1000);
 
         // Submit the form
-        var submitButton = _chromeDriver.FindElement(By.CssSelector("button[type='submit']"));
+        var submitButton = _driver.FindElement(By.CssSelector("button[type='submit']"));
         submitButton.Click();
         // Thread.Sleep(2000);
     }
@@ -72,20 +61,20 @@ public sealed class ValidateCPFStepDefinitions
         // Assert
         Assert.True(emailExists);
 
-       _chromeDriver.Close();
+       _driver.Close();
     }
 
     [Given(@"que existem os administradores cadastrados:")]
     public void DadoQueExistemOsAdministradoresCadastrados()
     {
-        _chromeDriver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl(_host + "/Administradores");
         cadastroBasico("John", "jon@teste.com", "133", "133");
     }
 
     [Then(@"devo ver a lista com pelo menos (.*) administrador")]
     public void EntaoDevoVerAListaComPeloMenosAdministrador(int p0)
     {
-        var html = _chromeDriver.PageSource;
+        var html = _driver.PageSource;
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
@@ -96,7 +85,7 @@ public sealed class ValidateCPFStepDefinitions
 
         Assert.True(quantidade > 0);
 
-       _chromeDriver.Close();
+       _driver.Close();
     }
 
     [Given(@"que o administrador com nome ""(.*)"" e email ""(.*)"" já existe")]
@@ -120,14 +109,14 @@ public sealed class ValidateCPFStepDefinitions
         // Assert
         Assert.True(emailExists);
 
-        _chromeDriver.Close();
+        _driver.Close();
     }
      
     [When(@"eu excluo o administrador com nome ""(.*)"" e email ""(.*)""")]
     public void QuandoEuExcluoOAdministradorComNomeEEmail(string nome, string email)
     {
         localizaNomeEmail(nome, email, "Delete");
-        var submitButton = _chromeDriver.FindElement(By.CssSelector("input[type='submit']"));
+        var submitButton = _driver.FindElement(By.CssSelector("input[type='submit']"));
         submitButton.Click();
     }
 
@@ -138,7 +127,7 @@ public sealed class ValidateCPFStepDefinitions
         // Assert
         Assert.False(emailExists);
 
-        _chromeDriver.Close();
+        _driver.Close();
     }
 
      [When(@"eu crio os seguintes novos administradores:")]
@@ -157,9 +146,9 @@ public sealed class ValidateCPFStepDefinitions
     [Then(@"os administradores são adicionados com sucesso")]
     public void EntaoOsAdministradoresSaoAdicionadosComSucesso()
     {
-        _chromeDriver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl(_host + "/Administradores");
 
-        var html = _chromeDriver.PageSource;
+        var html = _driver.PageSource;
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
@@ -170,20 +159,20 @@ public sealed class ValidateCPFStepDefinitions
 
         Assert.True(quantidade >= 5);
 
-       _chromeDriver.Close();
+       _driver.Close();
     }
 
     #region Privados
 
     private void cadastroBasico(string nome, string email, string senha, string csenha)
     {
-        _chromeDriver.Navigate().GoToUrl(_host + "/Administradores/Create");
+        _driver.Navigate().GoToUrl(_host + "/Administradores/Create");
         
         // Find the name, email, password and confirm password fields by ID
-        var nameField = _chromeDriver.FindElement(By.Id("Nome"));
-        var emailField = _chromeDriver.FindElement(By.Id("Email"));
-        var passwordField = _chromeDriver.FindElement(By.Id("Senha"));
-        var confirmPasswordField = _chromeDriver.FindElement(By.Id("csenha"));
+        var nameField = _driver.FindElement(By.Id("Nome"));
+        var emailField = _driver.FindElement(By.Id("Email"));
+        var passwordField = _driver.FindElement(By.Id("Senha"));
+        var confirmPasswordField = _driver.FindElement(By.Id("csenha"));
 
         // Enter administrator details
         nameField.SendKeys(nome);
@@ -192,16 +181,16 @@ public sealed class ValidateCPFStepDefinitions
         confirmPasswordField.SendKeys(csenha);
 
         // Submit the form
-        var submitButton = _chromeDriver.FindElement(By.CssSelector("input[type='submit']"));
+        var submitButton = _driver.FindElement(By.CssSelector("input[type='submit']"));
         submitButton.Click();
     }
 
     private void atualizaNomeEmail(string nome, string email)
     {
         // Find the name, email, password and confirm password fields by ID
-        var nameField = _chromeDriver.FindElement(By.Id("Nome"));
-        var emailField = _chromeDriver.FindElement(By.Id("Email"));
-        var passwordField = _chromeDriver.FindElement(By.Id("Senha"));
+        var nameField = _driver.FindElement(By.Id("Nome"));
+        var emailField = _driver.FindElement(By.Id("Email"));
+        var passwordField = _driver.FindElement(By.Id("Senha"));
 
         // Enter administrator details
         nameField.Clear();
@@ -214,13 +203,13 @@ public sealed class ValidateCPFStepDefinitions
         passwordField.SendKeys("123456");
 
         // Submit the form
-        var submitButton = _chromeDriver.FindElement(By.CssSelector("input[type='submit']"));
+        var submitButton = _driver.FindElement(By.CssSelector("input[type='submit']"));
         submitButton.Click();
     }
 
     private void localizaNomeEmail(string nomeBusca, string emailBusca, string textoBotao)
     {
-        var html = _chromeDriver.PageSource;
+        var html = _driver.PageSource;
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
@@ -240,7 +229,7 @@ public sealed class ValidateCPFStepDefinitions
             {
                 var editLink = row.SelectSingleNode("td[4]/a[contains(text(), '" + textoBotao + "')]");
                 var editUrl = editLink.Attributes["href"].Value;
-                _chromeDriver.Navigate().GoToUrl(_host + editUrl);
+                _driver.Navigate().GoToUrl(_host + editUrl);
                 break;
             }
         }
@@ -248,9 +237,9 @@ public sealed class ValidateCPFStepDefinitions
 
     private bool validaNomeEmail(string nome, string email)
     {
-        _chromeDriver.Navigate().GoToUrl(_host + "/Administradores");
+        _driver.Navigate().GoToUrl(_host + "/Administradores");
 
-        var html = _chromeDriver.PageSource;
+        var html = _driver.PageSource;
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
