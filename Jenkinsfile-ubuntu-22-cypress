@@ -11,16 +11,10 @@ pipeline {
         }
     }
     
-    
-    
-    
     stage('Build') {
       steps {
         sh '''
             cd tdd-desafio-qa-dotnet
-            dotnet build
-            export DATABASE_URL="Server=172.31.6.94;Database=desafioqa;Uid=root;Pwd=root"
-            cd ui
             dotnet build
         '''
       }
@@ -30,33 +24,16 @@ pipeline {
       steps {
         sh '''
             cd tdd-desafio-qa-dotnet
-            export DATABASE_URL="Server=172.31.6.94;Database=desafioqa;Uid=root;Pwd=root"
+            export DATABASE_URL="Server=172.31.8.135;Database=desafioqa;Uid=root;Pwd=root"
             dotnet test
         '''
       }
     }
-
-    stage('TestE2E') {
-      steps {
-        sh '''
-            export DATABASE_URL="Server=172.31.6.94;Database=desafioqa;Uid=root;Pwd=root"
-            cd  tdd-desafio-qa-dotnet/ui 
-            dotnet run --urls=http://localhost:5001 &
-            cd ../bdd 
-            
-            export DRIVER_PATH="/usr/bin/firefox"
-            export HOST="http://localhost:5001"
-            
-            dotnet test
-        '''
-      }
-    }
-    
     
     stage('TestE3ECypress') {
       steps {
         sh '''
-            export DATABASE_URL="Server=172.31.6.94;Database=desafioqa;Uid=root;Pwd=root"
+            export DATABASE_URL="Server=172.31.8.135;Database=desafioqa;Uid=root;Pwd=root"
             cd  tdd-desafio-qa-dotnet/ui 
             dotnet run --urls=http://localhost:5135 &
             cd ../bdd-cypress
