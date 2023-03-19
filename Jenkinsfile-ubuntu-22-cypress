@@ -44,5 +44,33 @@ pipeline {
       }
     }
 
+
+
+    stage('Deploy Dev') {
+      steps {
+        sh '''
+            echo "Aqui colocar o deploy"
+            # ansible-plabook ...
+        '''
+      }
+    }
+
+    stage('Deploy Stage') {
+      steps {
+        sh '''
+            echo "Aqui colocar o deploy"
+            # ansible-plabook ...
+        '''
+      }
+    }
+
+    stage('Deploy Prod') {
+      steps {
+        sh '''
+            echo "Aqui colocar o deploy"
+            # ansible-plabook ...
+        '''
+      }
+    }
   }
 }
